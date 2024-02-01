@@ -6,6 +6,40 @@ import tailwindcssGridAreas from "@savvywombat/tailwindcss-grid-areas";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontSize: {
+      'heading-xl': ['96px', {
+        fontWeight: '800',
+        letterSpacing: '0.05em',
+      }],
+      'heading-l': ['48px', {
+        fontWeight: '800',
+        letterSpacing: '0.1em',
+      }],
+      'heading-m': ['36px', {
+        fontWeight: '800',
+        letterSpacing: '0.05em',
+      }],
+      'heading-m-mobile': ['30px', {
+        fontWeight: '800',
+        letterSpacing: '0.05em',
+      }],
+      'heading-s': ['24px', {
+        fontWeight: '800',
+        letterSpacing: '0.05em',
+      }],
+      'button': ['24px', {
+        fontWeight: '700',
+        letterSpacing: '0.02em',
+      }],
+      'body': ['24px', {
+        fontWeight: '500',
+        letterSpacing: '0.05em',
+      }],
+      'body-mobile': ['20px', {
+        fontWeight: '500',
+        letterSpacing: '0.05em',
+      }],
+    },
     extend: {
       colors: {
         background: "#1a2a33",
@@ -21,42 +55,11 @@ export default {
         "red": "#ff6f6c",
         "green": "#95ff9a",
       },
-      fontSize: {
-        'heading-xl': ['96px', {
-          fontWeight: '800',
-          letterSpacing: '0.05em',
-        }],
-        'heading-l': ['48px', {
-          fontWeight: '800',
-          letterSpacing: '0.1em',
-        }],
-        'heading-m': ['36px', {
-          fontWeight: '800',
-          letterSpacing: '0.05em',
-        }],
-        'heading-m-mobile': ['30px', {
-          fontWeight: '800',
-          letterSpacing: '0.05em',
-        }],
-        'heading-s': ['24px', {
-          fontWeight: '800',
-          letterSpacing: '0.05em',
-        }],
-        'button': ['24px', {
-          fontWeight: '700',
-          letterSpacing: '0.02em',
-        }],
-        'body': ['24px', {
-          fontWeight: '500',
-          letterSpacing: '0.05em',
-        }],
-        'body-mobile': ['20px', {
-          fontWeight: '500',
-          letterSpacing: '0.05em',
-        }],
-      },
       opacity: {
         32: 0.32
+      },
+      boxShadow: {
+        'button': '0 6px 0',
       },
       gridTemplateAreas: {},
       gridTemplateColumns: {},
