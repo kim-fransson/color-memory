@@ -1,0 +1,17 @@
+@import '@fontsource-variable/outfit';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    color: #c0c0c0;
+    background: #1a2a33;
+    font-family: 'Outfit Variable', sans-serif;
+}
+
+@layer components {}
+
+
+
+
