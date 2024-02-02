@@ -8,7 +8,7 @@ const meta: Meta<typeof QuadrantButton> = {
     "aria-label": 'QuadrantButton'
   },
   decorators: [
-    (QuadrantButtonStory) => <div className="bg-[#354a56] rounded-2xl p-4">
+    (QuadrantButtonStory) => <div className="bg-[#354a56] rounded-2xl p-4 w-20 h-20 flex items-center justify-center">
       <QuadrantButtonStory />
     </div>
   ]
@@ -21,53 +21,21 @@ export const Green: Story = {
   args: {
     color: 'green'
   },
-  render: (args) => (
-    <div className="flex gap-8 items-end">
-      <QuadrantButton {...args} />
-      <QuadrantButton {...args} state="active" />
-      <QuadrantButton {...args} size="small" />
-      <QuadrantButton {...args} state="active" size="small" />
-    </div>
-  )
 };
 
 export const Red: Story = {
   args: {
     color: 'red'
   },
-  render: (args) => (
-    <div className="flex gap-8 items-end">
-      <QuadrantButton {...args} />
-      <QuadrantButton {...args} state="active" />
-      <QuadrantButton {...args} size="small" />
-      <QuadrantButton {...args} state="active" size="small" />
-    </div>
-  )
 };
 export const Blue: Story = {
   args: {
     color: 'blue'
   },
-  render: (args) => (
-    <div className="flex gap-8 items-end">
-      <QuadrantButton {...args} />
-      <QuadrantButton {...args} state="active" />
-      <QuadrantButton {...args} size="small" />
-      <QuadrantButton {...args} state="active" size="small" />
-    </div>
-  )
 };
 
 export const Yellow: Story = {
   args: {
     color: 'yellow'
-  },
-  render: (args) => (
-    <div className="flex gap-8 items-end">
-      <QuadrantButton {...args} />
-      <QuadrantButton {...args} state="active" />
-      <QuadrantButton {...args} size="small" />
-      <QuadrantButton {...args} state="active" size="small" />
-    </div>
-  )
+  }
 };

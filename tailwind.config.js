@@ -71,7 +71,14 @@ export default {
     tailwindcssAnimate,
     // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1139895799
     ({ addUtilities }) => {
-      addUtilities({});
+      addUtilities({
+        ".absolute-center": {
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)"
+        }
+      });
     },
     tailwindcssGridAreas,
   ],

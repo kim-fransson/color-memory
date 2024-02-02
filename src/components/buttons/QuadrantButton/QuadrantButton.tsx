@@ -1,43 +1,77 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { Button as AriaButton, ButtonProps as AriaButtonProps } from 'react-aria-components';
-
-import Quadrant from "@assets/quadrant.svg?react";
-import QuadrantSmall from "@assets/quadrant-small.svg?react";
+import { twMerge } from 'tailwind-merge';
 
 const button = cva([
-  "outline-none pressed:scale-95 transition-all hover:opacity-100 focus-visible:opacity-100",
+  "outline-none pressed:scale-95 transition-all rounded-tr-full min-w-8 min-h-8",
 ], {
   variants: {
-    size: {
-      small: [],
-      medium: []
-    },
     state: {
-      active: ["opacity-100"],
-      inactive: ["opacity-50"]
+      active: [],
+      inactive: []
     },
     color: {
-      green: ["text-green -rotate-90"],
-      red: ["text-red"],
-      blue: ["text-dark-blue rotate-90"],
-      yellow: ["text-light-orange rotate-180"]
+      green: ["-rotate-90 hover:bg-green focus-visible:bg-green"],
+      red: ["hover:bg-red focus-visible:bg-red"],
+      blue: ["hover:bg-blue focus-visible:bg-blue rotate-90"],
+      yellow: ["hover:bg-light-orange focus-visible:bg-light-orange  rotate-180"]
     }
   },
+  compoundVariants: [
+    {
+      state: "active",
+      color: "green",
+      className: "bg-green",
+    },
+    {
+      state: "inactive",
+      color: "green",
+      className: "bg-[#5d9c6e]",
+    },
+    {
+      state: "active",
+      color: "red",
+      className: "bg-red"
+    },
+    {
+      state: 'inactive',
+      color: 'red',
+      className: "bg-[#935457]"
+    },
+    {
+      state: "active",
+      color: "blue",
+      className: "bg-blue"
+    },
+    {
+      state: "inactive",
+      color: "blue",
+      className: "bg-[#487499]"
+    },
+    {
+      state: "active",
+      color: "yellow",
+      className: "bg-light-orange"
+    },
+    {
+      state: 'inactive',
+      color: "yellow",
+      className: "bg-[#8d7345]"
+    }
+  ],
   defaultVariants: {
     state: 'inactive',
-    size: 'medium'
   },
 })
 
-type QuadrantButtonProps = Omit<AriaButtonProps, 'children'> & VariantProps<typeof button>
+type QuadrantButtonProps = {
+  className?: string;
+} & Omit<AriaButtonProps, 'children'> & VariantProps<typeof button>
 
-export const QuadrantButton = ({ size = "medium", color, state = "inactive", ...reactAriaProps }: QuadrantButtonProps) => {
+export const QuadrantButton = ({ color, state = "inactive", className, ...reactAriaProps }: QuadrantButtonProps) => {
   return (
     <AriaButton
-      {...reactAriaProps} className={button({ size, color, state })}
-      isDisabled={state === "active"}
-    >
-      {size === "medium" ? <Quadrant /> : <QuadrantSmall />}
-    </AriaButton>
+      {...reactAriaProps} className={twMerge(button({ color, state }), className)}
+    />
   )
 }
