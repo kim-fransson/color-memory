@@ -1,6 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority';
 import { Button as AriaButton, ButtonProps as AriaButtonProps } from 'react-aria-components';
-import { twMerge } from 'tailwind-merge';
+import { twJoin } from 'tailwind-merge';
 
 const button = cva([
   "outline-none pressed:scale-95 transition-all rounded-tr-full min-w-8 min-h-8",
@@ -68,10 +68,10 @@ type QuadrantButtonProps = {
   className?: string;
 } & Omit<AriaButtonProps, 'children'> & VariantProps<typeof button>
 
-export const QuadrantButton = ({ color, state = "inactive", className, ...reactAriaProps }: QuadrantButtonProps) => {
+export const QuadrantButton = ({ color, state, className, ...reactAriaProps }: QuadrantButtonProps) => {
   return (
     <AriaButton
-      {...reactAriaProps} className={twMerge(button({ color, state }), className)}
+      {...reactAriaProps} className={twJoin(button({ color, state }), className)}
     />
   )
 }

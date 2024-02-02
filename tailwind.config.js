@@ -45,6 +45,7 @@ export default {
         background: "#1a2a33",
         "dark-gray": "#263943",
         gray: "#354a56",
+        "light-gray": "#476170",
         silver: "#c0c0c0",
         "light-silver": "#e4e4e4",
         "orange": "#ffa726",
