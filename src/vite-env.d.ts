@@ -6,3 +6,5 @@ interface ImportMetaEnv {}
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+declare module "*.m4a";

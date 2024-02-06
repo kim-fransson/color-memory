@@ -17,4 +17,5 @@ export default defineConfig({
     },
   },
   plugins: [react(), svgr()],
+  assetsInclude: ["**/*.m4a"],
 });
