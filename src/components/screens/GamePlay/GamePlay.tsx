@@ -2,9 +2,12 @@ import { Gamepad } from "@/components/displays";
 import { useGame } from "@/hooks";
 import { useMemo, useState } from "react";
 import BeepSound from "@assets/sounds/color-ping.mp3";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export const GamePlay = () => {
   const { addPoint, sequence, gameOver, nextTurn, score } = useGame();
+  const [bestScore, setBestScore] = useLocalStorage("best-score", 0);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const beep = useMemo(() => new Audio(BeepSound), []);
 
@@ -15,6 +18,9 @@ export const GamePlay = () => {
       return gameOver();
     }
 
+    if (score + 1 > bestScore) {
+      setBestScore(score + 1);
+    }
     addPoint();
     if (activeIndex === sequence.length - 1) {
       nextTurn();

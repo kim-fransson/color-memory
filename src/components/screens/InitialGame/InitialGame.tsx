@@ -10,7 +10,7 @@ export const InitialGame = () => {
         <h2 className="md:text-heading-m text-heading-m-mobile">
           COLOR MEMORY
         </h2>
-        <Gamepad />
+        <Gamepad isReadOnly />
         <Button
           onPress={() => startCountdown()}
           color="orange"
