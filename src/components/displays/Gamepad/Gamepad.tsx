@@ -9,7 +9,7 @@ const gamepad = cva(
   {
     variants: {
       size: {
-        small: ["h-[128px] w-[128px]"],
+        small: ["md:h-[128px] md:w-[128px] h-[90px] w-[90px]"],
         medium: ["md:h-[414px] md:w-[414px] w-[280px] h-[280px]"],
       },
     },
@@ -46,7 +46,7 @@ export const Gamepad = ({
           "grid grid-cols-2",
           size === "medium"
             ? "md:h-[360px] md:w-[360px] h-[243px] w-[243px]"
-            : "h-[111px] w-[111px]",
+            : "md:h-[111px] md:w-[111px] h-[80px] w-[80px]",
         )}
       >
         <QuadrantButton
@@ -82,7 +82,7 @@ export const Gamepad = ({
             "rounded-full bg-dark-gray absolute-center z-50 flex items-center justify-center",
             size === "medium"
               ? "md:h-[183px] md:w-[183px] h-[124px] w-[124px]"
-              : "h-[57px] w-[57px]",
+              : "md:h-[57px] md:w-[57px] h-[38px] w-[38px]",
           )}
         >
           <span className="text-heading-l">{score}</span>

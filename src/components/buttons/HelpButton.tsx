@@ -32,12 +32,12 @@ export const HelpButton = ({ className }: HelpButtonProps) => {
         id="help_modal"
         className={twMerge("modal", hideDialog ? "hidden" : "")}
       >
-        <div className="bg-dark-gray text-white flex flex-col rounded-2xl h-[450px] w-[770px] items-center justify-center z-50">
+        <div className="bg-[#1a2a33] text-white flex flex-col lg:rounded-2xl rounded-none h-[450px] lg:w-[770px] w-full items-center justify-center z-50 p-2">
           <h2 className="text-heading-m">GAME RULES</h2>
-          <p className="mt-4 text-body">
+          <p className="mt-4 text-body text-center">
             Repeat the upcoming sequences of signals.
           </p>
-          <div className="mt-8 flex items-center gap-8">
+          <div className="mt-8 flex items-center md:gap-8 gap-2">
             <Gamepad isReadOnly size="small" activeColor="green" />
             <Gamepad isReadOnly size="small" activeColor="red" />
             <Gamepad isReadOnly size="small" activeColor="blue" />

@@ -1,6 +1,7 @@
 import Game from "./Game";
 import type { Meta, StoryObj } from "@storybook/react";
 import { GameProvider } from "./context/GameContext";
+import { SoundProvider } from "./context/SoundContext";
 
 const meta: Meta<typeof Game> = {
   component: Game,
@@ -9,9 +10,11 @@ const meta: Meta<typeof Game> = {
   },
   decorators: [
     (Story) => (
-      <GameProvider>
-        <Story />
-      </GameProvider>
+      <SoundProvider>
+        <GameProvider>
+          <Story />
+        </GameProvider>
+      </SoundProvider>
     ),
   ],
   args: {},

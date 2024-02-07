@@ -10,22 +10,47 @@ export const GameOver = () => {
   const { isMuted } = useSound();
   const lose = useMemo(() => new Audio(LoseSound), []);
 
+  const closeModal = () => {
+    const dialog = document.getElementById(
+      "game_over_modal",
+    ) as HTMLDialogElement;
+    dialog.close();
+  };
+
   useEffect(() => {
+    const dialog = document.getElementById(
+      "game_over_modal",
+    ) as HTMLDialogElement;
+    dialog.showModal();
     if (!isMuted) {
       lose.play();
     }
-  }, [lose]);
+  }, []);
 
   return (
     <>
-      <dialog open id="game_over_modal" className="modal">
-        <div className="bg-dark-gray w-[877px] h-[492px] flex flex-col items-center justify-center gap-8 rounded-2xl z-50">
-          <h2 className="text-heading-xl">GAME OVER</h2>
-          <div className="grid grid-cols-2 gap-12 w-full max-w-md">
-            <Button onPress={quit} color="silver">
+      <dialog id="game_over_modal" className="modal">
+        <div className="bg-[#1a2a33] lg:w-[877px] w-full h-[492px] flex flex-col items-center justify-center gap-8 lg:rounded-2xl rounded-none z-50">
+          <h2 className="md:text-heading-xl text-heading-m">GAME OVER</h2>
+          <div className="grid md:grid-cols-2 grid-cols md:gap-12 gap-8 w-full md:max-w-md max-w-[200px]">
+            {/* Super ugly hack to avoid autofocus from dialog */}
+            <button className="w-0 h-0 absolute outline-none"></button>
+            <Button
+              onPress={() => {
+                closeModal();
+                quit();
+              }}
+              color="silver"
+            >
               QUIT
             </Button>
-            <Button onPress={() => startCountdown()} color="orange">
+            <Button
+              onPress={() => {
+                closeModal();
+                startCountdown();
+              }}
+              color="orange"
+            >
               TRY AGAIN
             </Button>
           </div>
@@ -36,7 +61,6 @@ export const GameOver = () => {
         <div className="inline-grid justify-items-center md:gap-8 gap-4">
           <h2 className="md:text-heading-m text-heading-m-mobile">YOUR TURN</h2>
           <Gamepad score={score} isReadOnly />
-          <span className="text-heading-l">SCORE: {score}</span>
         </div>
       </div>
     </>

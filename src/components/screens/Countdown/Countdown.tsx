@@ -19,8 +19,23 @@ export const Countdown = () => {
 
   const ref = useRef<HTMLDialogElement>(null);
 
+  useEffect(() => {
+    const dialog = document.getElementById(
+      "countdown_modal",
+    ) as HTMLDialogElement;
+    dialog.showModal();
+  });
+
+  const closeModal = () => {
+    const dialog = document.getElementById(
+      "countdown_modal",
+    ) as HTMLDialogElement;
+    dialog.close();
+  };
+
   const handleCountdownEnd = () => {
     startSequence();
+    closeModal();
   };
 
   useEffect(() => {
@@ -89,9 +104,9 @@ export const Countdown = () => {
 
   return (
     <>
-      <dialog open ref={ref} id="countdown_modal" className="modal">
+      <dialog ref={ref} id="countdown_modal" className="modal">
         <div
-          className="w-screen flex justify-center items-center bg-dark-gray
+          className="w-screen flex justify-center items-center bg-[#1a2a33]
       h-[348px] text-heading-xl text-white z-50"
         >
           <AnimatePresence>
