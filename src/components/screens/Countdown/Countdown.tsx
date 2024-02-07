@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import CountdownBeep from "@assets/sounds/countdown-beep.m4a";
 import CountdownEnd from "@assets/sounds/countdown-end.m4a";
 import { useGame, useSound } from "@/hooks";
@@ -17,14 +17,12 @@ export const Countdown = () => {
   const { startSequence } = useGame();
   const { isMuted } = useSound();
 
-  const ref = useRef<HTMLDialogElement>(null);
-
   useEffect(() => {
     const dialog = document.getElementById(
       "countdown_modal",
     ) as HTMLDialogElement;
     dialog.showModal();
-  });
+  }, []);
 
   const closeModal = () => {
     const dialog = document.getElementById(
@@ -39,64 +37,43 @@ export const Countdown = () => {
   };
 
   useEffect(() => {
-    const dialogElement = ref.current;
+    setCount(COUNTDOWN_FROM);
+    setShowStart(false);
+    countdownBeep.currentTime = 0;
 
-    const startCountdown = () => {
-      setCount(COUNTDOWN_FROM);
-      setShowStart(false);
-      countdownBeep.currentTime = 0;
+    const timer = setInterval(() => {
+      setCount((prevCount) => {
+        if (prevCount > 0 && !isMuted) {
+          countdownBeep.currentTime = 0;
+          countdownBeep.play();
+        }
 
-      const timer = setInterval(() => {
-        setCount((prevCount) => {
-          if (prevCount > 0 && !isMuted) {
-            countdownBeep.play();
-          }
+        if (prevCount <= 1) {
+          countdownEnd.currentTime = 0;
+          clearInterval(timer);
+          setTimeout(() => {
+            setShowStart(true);
+            if (!isMuted) {
+              countdownEnd.play();
+            }
+          }, 1000);
 
-          if (prevCount <= 1) {
-            countdownEnd.currentTime = 0;
-            clearInterval(timer);
-            setTimeout(() => {
-              setShowStart(true);
-              if (!isMuted) {
-                countdownEnd.play();
-              }
-            }, 1000);
-
-            setTimeout(() => {
-              handleCountdownEnd();
-            }, 2200);
-            return 0;
-          }
-          return prevCount - 1;
-        });
-      }, 1000);
-
-      return () => {
-        clearInterval(timer);
-        countdownBeep.pause();
-        countdownBeep.currentTime = 0;
-        countdownEnd.currentTime = 0;
-      };
-    };
-
-    if (dialogElement) {
-      if (dialogElement.open) {
-        startCountdown();
-      }
-
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (mutation.attributeName === "open" && dialogElement.open) {
-            startCountdown();
-          }
-        });
+          setTimeout(() => {
+            handleCountdownEnd();
+          }, 2200);
+          return 0;
+        }
+        return prevCount - 1;
       });
+    }, 1000);
 
-      observer.observe(dialogElement, { attributes: true });
-
-      return () => observer.disconnect();
-    }
-  }, [countdownBeep, countdownEnd, ref]);
+    return () => {
+      clearInterval(timer);
+      countdownBeep.pause();
+      countdownBeep.currentTime = 0;
+      countdownEnd.currentTime = 0;
+    };
+  }, [countdownBeep, countdownEnd]);
 
   const customStyle = {
     "--value": count,
@@ -104,7 +81,7 @@ export const Countdown = () => {
 
   return (
     <>
-      <dialog ref={ref} id="countdown_modal" className="modal outline-none">
+      <dialog id="countdown_modal" className="modal outline-none">
         <div
           className="w-screen flex justify-center items-center bg-[#1a2a33]
       h-[348px] text-heading-xl text-white z-50"

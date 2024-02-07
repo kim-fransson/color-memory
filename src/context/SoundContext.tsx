@@ -1,4 +1,5 @@
 import { PropsWithChildren, createContext, useMemo, useState } from "react";
+import { isSafari } from "react-device-detect";
 
 export const SoundContext = createContext({
   isMuted: false,
@@ -6,7 +7,7 @@ export const SoundContext = createContext({
 });
 
 export const SoundProvider = ({ children }: PropsWithChildren) => {
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(isSafari);
 
   const memoizedValue = useMemo(() => {
     return {
