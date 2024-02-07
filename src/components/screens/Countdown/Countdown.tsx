@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import CountdownBeep from "@assets/sounds/countdown-beep.m4a";
 import CountdownEnd from "@assets/sounds/countdown-end.m4a";
-import { useGame } from "@/hooks";
+import { useGame, useSound } from "@/hooks";
 import { Gamepad } from "@/components/displays";
 import { Button } from "@/components/buttons";
 
@@ -15,6 +15,7 @@ export const Countdown = () => {
   const [count, setCount] = useState(COUNTDOWN_FROM);
   const [showStart, setShowStart] = useState(false);
   const { startSequence } = useGame();
+  const { isMuted } = useSound();
 
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -32,7 +33,7 @@ export const Countdown = () => {
 
       const timer = setInterval(() => {
         setCount((prevCount) => {
-          if (prevCount > 0) {
+          if (prevCount > 0 && !isMuted) {
             countdownBeep.play();
           }
 
@@ -41,7 +42,9 @@ export const Countdown = () => {
             clearInterval(timer);
             setTimeout(() => {
               setShowStart(true);
-              countdownEnd.play();
+              if (!isMuted) {
+                countdownEnd.play();
+              }
             }, 1000);
 
             setTimeout(() => {

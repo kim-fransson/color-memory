@@ -27,9 +27,15 @@ type GamepadProps = {
   onPressYellow?: () => void;
   activeColor?: Color;
   isReadOnly?: boolean;
+  score?: number;
 } & VariantProps<typeof gamepad>;
 
-export const Gamepad = ({ className, isReadOnly, ...rest }: GamepadProps) => {
+export const Gamepad = ({
+  className,
+  isReadOnly,
+  score,
+  ...rest
+}: GamepadProps) => {
   const { size = "medium", activeColor } = rest;
   const { onPressGreen, onPressRed, onPressBlue, onPressYellow } = rest;
 
@@ -73,12 +79,14 @@ export const Gamepad = ({ className, isReadOnly, ...rest }: GamepadProps) => {
         />
         <div
           className={twMerge(
-            "rounded-full bg-dark-gray absolute-center z-50",
+            "rounded-full bg-dark-gray absolute-center z-50 flex items-center justify-center",
             size === "medium"
               ? "md:h-[183px] md:w-[183px] h-[124px] w-[124px]"
               : "h-[57px] w-[57px]",
           )}
-        />
+        >
+          <span className="text-heading-l">{score}</span>
+        </div>
         <div
           className={twMerge(
             "bg-dark-gray absolute-center z-40",

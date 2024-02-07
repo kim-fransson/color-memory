@@ -1,5 +1,5 @@
 import { Gamepad } from "@/components/displays";
-import { useGame } from "@/hooks";
+import { useGame, useSound } from "@/hooks";
 import { calculateSpeed } from "@/utils";
 import { useEffect, useMemo, useState } from "react";
 import BeepSound from "@assets/sounds/color-ping.mp3";
@@ -7,6 +7,7 @@ import BeepSound from "@assets/sounds/color-ping.mp3";
 export const Sequence = () => {
   const { sequence, level, startGameplay, score } = useGame();
   const beep = useMemo(() => new Audio(BeepSound), []);
+  const { isMuted } = useSound();
   const [activeColor, setActiveColor] = useState<Color>();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -18,7 +19,9 @@ export const Sequence = () => {
 
       const startSequence = () => {
         beep.currentTime = 0;
-        beep.play();
+        if (!isMuted) {
+          beep.play();
+        }
         setActiveColor(sequence[currentIndex]);
 
         const timeoutId = setTimeout(() => {
@@ -45,7 +48,7 @@ export const Sequence = () => {
     } else {
       startGameplay();
     }
-  }, [beep, currentIndex, sequence, speed, startGameplay]);
+  }, [beep, currentIndex, isMuted, sequence, speed, startGameplay]);
 
   return (
     <div className="absolute-center">
@@ -53,8 +56,7 @@ export const Sequence = () => {
         <h2 className="md:text-heading-m text-heading-m-mobile">
           WATCH CLOSELY
         </h2>
-        <Gamepad activeColor={activeColor} isReadOnly />
-        <span className="text-heading-l">SCORE: {score}</span>
+        <Gamepad score={score} activeColor={activeColor} isReadOnly />
       </div>
     </div>
   );

@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@/components/buttons";
 import { Gamepad } from "@/components/displays";
-import { useGame } from "@/hooks";
+import { useGame, useSound } from "@/hooks";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { useEffect, useMemo } from "react";
 import ReactConfetti from "react-confetti";
+import SuccessSound from "@assets/sounds/success.mp3";
 
 const messages = [
   { message: "Great job! 🌟" },
@@ -35,6 +38,15 @@ const messages = [
 export const NextTurn = () => {
   const { level, startCountdown, score } = useGame();
   const { height, width } = useWindowSize();
+  const { isMuted } = useSound();
+  const success = useMemo(() => new Audio(SuccessSound), []);
+
+  useEffect(() => {
+    if (!isMuted) {
+      success.play();
+    }
+  }, [success]);
+
   return (
     <>
       <ReactConfetti width={width ?? undefined} height={height ?? undefined} />
@@ -43,7 +55,7 @@ export const NextTurn = () => {
           <h2 className="md:text-heading-m text-heading-m-mobile">
             {messages[level - 0].message}
           </h2>
-          <Gamepad isReadOnly />
+          <Gamepad isReadOnly score={score} />
           <Button
             onPress={() => startCountdown(level, score)}
             color="orange"

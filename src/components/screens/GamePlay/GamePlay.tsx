@@ -1,11 +1,12 @@
 import { Gamepad } from "@/components/displays";
-import { useGame } from "@/hooks";
+import { useGame, useSound } from "@/hooks";
 import { useMemo, useState } from "react";
 import BeepSound from "@assets/sounds/color-ping.mp3";
 import { useLocalStorage } from "@uidotdev/usehooks";
 
 export const GamePlay = () => {
   const { addPoint, sequence, gameOver, nextTurn, score } = useGame();
+  const { isMuted } = useSound();
   const [bestScore, setBestScore] = useLocalStorage("best-score", 0);
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -13,7 +14,6 @@ export const GamePlay = () => {
 
   const handleSelect = (color: Color) => {
     beep.currentTime = 0;
-    beep.play();
     if (color !== sequence[activeIndex]) {
       return gameOver();
     }
@@ -25,6 +25,9 @@ export const GamePlay = () => {
     if (activeIndex === sequence.length - 1) {
       nextTurn();
     } else {
+      if (!isMuted) {
+        beep.play();
+      }
       setActiveIndex((curr) => curr + 1);
     }
   };
@@ -38,8 +41,8 @@ export const GamePlay = () => {
           onPressGreen={() => handleSelect("green")}
           onPressRed={() => handleSelect("red")}
           onPressYellow={() => handleSelect("yellow")}
+          score={score}
         />
-        <span className="text-heading-l">SCORE: {score}</span>
       </div>
     </div>
   );

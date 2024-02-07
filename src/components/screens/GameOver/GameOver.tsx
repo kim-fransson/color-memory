@@ -1,9 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from "@/components/buttons";
 import { Gamepad } from "@/components/displays";
-import { useGame } from "@/hooks";
+import { useGame, useSound } from "@/hooks";
+import { useEffect, useMemo } from "react";
+import LoseSound from "@assets/sounds/lose.mp3";
 
 export const GameOver = () => {
   const { score, quit, startCountdown } = useGame();
+  const { isMuted } = useSound();
+  const lose = useMemo(() => new Audio(LoseSound), []);
+
+  useEffect(() => {
+    if (!isMuted) {
+      lose.play();
+    }
+  }, [lose]);
+
   return (
     <>
       <dialog open id="game_over_modal" className="modal">
@@ -23,7 +35,7 @@ export const GameOver = () => {
       <div className="absolute-center">
         <div className="inline-grid justify-items-center md:gap-8 gap-4">
           <h2 className="md:text-heading-m text-heading-m-mobile">YOUR TURN</h2>
-          <Gamepad isReadOnly />
+          <Gamepad score={score} isReadOnly />
           <span className="text-heading-l">SCORE: {score}</span>
         </div>
       </div>
