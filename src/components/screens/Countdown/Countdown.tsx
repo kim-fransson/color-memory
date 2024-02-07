@@ -39,28 +39,32 @@ export const Countdown = () => {
   useEffect(() => {
     setCount(COUNTDOWN_FROM);
     setShowStart(false);
-    countdownBeep.currentTime = 0;
+    const timeoutIds = [] as NodeJS.Timeout[];
 
     const timer = setInterval(() => {
       setCount((prevCount) => {
         if (prevCount > 0 && !isMuted) {
-          countdownBeep.currentTime = 0;
           countdownBeep.play();
         }
 
         if (prevCount <= 1) {
-          countdownEnd.currentTime = 0;
           clearInterval(timer);
-          setTimeout(() => {
+
+          const endTimeout = setTimeout(() => {
             setShowStart(true);
             if (!isMuted) {
               countdownEnd.play();
             }
           }, 1000);
 
-          setTimeout(() => {
+          timeoutIds.push(endTimeout);
+
+          const endCountdownTimeout = setTimeout(() => {
             handleCountdownEnd();
           }, 2200);
+
+          timeoutIds.push(endCountdownTimeout);
+
           return 0;
         }
         return prevCount - 1;
@@ -69,11 +73,9 @@ export const Countdown = () => {
 
     return () => {
       clearInterval(timer);
-      countdownBeep.pause();
-      countdownBeep.currentTime = 0;
-      countdownEnd.currentTime = 0;
+      timeoutIds.forEach(clearTimeout);
     };
-  }, [countdownBeep, countdownEnd]);
+  }, []);
 
   const customStyle = {
     "--value": count,
