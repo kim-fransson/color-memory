@@ -104,7 +104,7 @@ export const Countdown = () => {
 
   return (
     <>
-      <dialog ref={ref} id="countdown_modal" className="modal">
+      <dialog ref={ref} id="countdown_modal" className="modal outline-none">
         <div
           className="w-screen flex justify-center items-center bg-[#1a2a33]
       h-[348px] text-heading-xl text-white z-50"
