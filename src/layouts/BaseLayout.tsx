@@ -12,10 +12,24 @@ export const BaseLayout = ({ children }: PropsWithChildren) => {
       {children}
 
       {bestScore > 0 && (
-        <span className="absolute text-heading-s md:bottom-8 md:left-8 bottom-4 left-4">
+        <span className="absolute text-heading-s md:bottom-8 md:left-8 bottom-14 left-4">
           BEST SCORE: {bestScore}
         </span>
       )}
+
+      <div className="flex items-center gap-2 absolute md:right-8 md:left-auto left-4 md:bottom-8 bottom-4">
+        <span className="select-none rounded-lg bg-[#672871] px-2 py-1 text-gray-100 text-sm font-medium">
+          Designs from
+        </span>
+        <a
+          className="text-sm font-medium hover:text-[#672871]"
+          href="https://bigdevsoon.me/"
+          target="_blank"
+          title="BigDevSoon"
+        >
+          BigDevSoon.me
+        </a>
+      </div>
     </div>
   );
 };
